@@ -18,7 +18,7 @@ def scrape_amazon(search_term):
 
     for item in soup.find_all("div", class_="s-result-item"):
         name = item.find("span", class_="a-size-medium a-color-base a-text-normal")
-        name = name.text if name else ""
+        name = name.text[:10] if name else ""
 
         url_element = item.find("a", class_="a-link-normal s-no-outline")
         url = url_element["href"] if url_element else ""
