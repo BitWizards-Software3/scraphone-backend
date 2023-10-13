@@ -3,7 +3,7 @@ from selenium import webdriver
 
 def scrape_amazon(search_term):
     # URL de Amazon con el término de búsqueda
-    url = f"https://www.amazon.in/s?k={search_term}&crid=2M096C61O4MLT&qid=1653308124&sprefix={search_term.replace(' ', '+')}"
+    url = f"https://www.amazon.com/s?k={search_term}&crid=2M096C61O4MLT&qid=1653308124&sprefix={search_term.replace(' ', '+')}"
 
     # Inicializa el navegador (en este caso, Chrome)
     driver = webdriver.Chrome()
@@ -18,42 +18,26 @@ def scrape_amazon(search_term):
 
     for item in soup.find_all("div", class_="s-result-item"):
         name = item.find("span", class_="a-size-medium a-color-base a-text-normal")
-        if name is not None:
-            name = name.text
-        else:
-            name = ""
+        name = name.text if name else ""
 
-        url = item.find("a", class_="a-link-normal a-text-normal")
-        if url is not None:
-            url = url["href"]
-        else:
-            url = ""
+        url_element = item.find("a", class_="a-link-normal s-no-outline")
+        url = url_element["href"] if url_element else ""
 
         price = item.find("span", class_="a-offscreen")
-        if price is not None:
-            price = price.text
-        else:
-            price = ""
+        price = price.text if price else ""
 
         rating = item.find("span", class_="a-icon-alt")
-        if rating is not None:
-            rating = rating.text
-        else:
-            rating = ""
+        rating = rating.text if rating else ""
+    
 
-        review_count = item.find("div", class_="a-section a-text-center")
-        if review_count is not None:
-            review_count = review_count.text
-        else:
-            review_count = ""
-
-        product_data.append({
-            "Nombre del Producto": name,
-            "URL": url,
-            "Precio": price,
-            "Calificación": rating,
-            "Cantidad de Reseñas": review_count
-        })
+        # Verifica si al menos uno de los campos importantes no está vacío
+        if name and url:
+            product_data.append({
+                "Nombre del Producto": name,
+                "URL": f'<a href="{url}">Enlace</a>',
+                "Precio": price,
+                "Calificación": rating,
+            })
 
     # Cierra el navegador cuando hayas terminado
     driver.quit()
