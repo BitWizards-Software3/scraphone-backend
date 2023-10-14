@@ -18,7 +18,9 @@ def scrape_aliexpress(search_term):
         else:
             image = 'Not found'
         # Extraer el precio del producto
-        price = prod.find("div", class_="manhattan--price-sale--1CCSZfK").text.strip()
+        price_text = prod.find("div", class_="manhattan--price-sale--1CCSZfK").text.strip()
+        price_text = price_text.replace('COP', '').replace(',', '')  # Eliminar 'COP' y las comas
+        price = float(price_text)  # Convertir el precio a un número
         # Extraer el enlace del producto
         link = prod['href']
         if link.startswith("//"):
@@ -35,4 +37,4 @@ def scrape_aliexpress(search_term):
     # Convertir la lista de productos en un objeto JSON y devolverlo
     return product_data
 
-
+print(scrape_aliexpress("iphone"))
