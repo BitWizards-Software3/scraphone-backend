@@ -29,7 +29,7 @@ def scrape_alibaba(search_term):
         # Utiliza la función extract_price para obtener el precio
         min_price = extract_price(price_text)
         # Convierte el precio a COP
-        min_price = min_price * 4249.00  # Asumiendo una tasa de conversión
+        min_price = min_price * 4249.00  # Asumiendo una tasa de conversión Post se intento utilizar librerias de conversion de moneda pero no funcionaron
         
         # Extraer el enlace del producto
         link_tag = prod.find("a")
