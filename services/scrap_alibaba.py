@@ -23,16 +23,18 @@ def scrape_alibaba(search_term):
         # Extraer la imagen del producto
         img_tag = prod.find("img")
         image = img_tag['src'] if img_tag else 'Not found'
+        image= 'https:'+image
         # Extraer el precio del producto
         price_text = prod.find("div", class_="search-card-e-price-main").text.strip()
         # Utiliza la función extract_price para obtener el precio
         min_price = extract_price(price_text)
         # Convierte el precio a COP
         min_price = min_price * 4249.00  # Asumiendo una tasa de conversión
-
+        
         # Extraer el enlace del producto
         link_tag = prod.find("a")
         link = link_tag['href'] if link_tag else 'Not found'
+        link = 'https:' + link if link.startswith('//') else link
 
         # Añadir el producto a la lista de productos
         product_data.append({
