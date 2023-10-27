@@ -12,4 +12,5 @@ class Patient(Base):
     stock = Column(Integer)
     stock_notification = Column(Integer)   
     existence_notification = Column(Integer)
+    
 Base.metadata.create_all(bind=engine)
