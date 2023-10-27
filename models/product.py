@@ -1,16 +1,13 @@
-from sqlalchemy import Column, Integer
-from config.database import Base, engine
+from sqlalchemy import Table,Column,Integer,String
+from config.database import meta,engine
+
+product=  Table( "product",meta,Column("id",Integer,primary_key=True)
+              ,Column("name",String(255))
+              ,Column("description",String(255))
+              ,Column("shelf",String(255))
+              ,Column("stock",Integer)
+              ,Column("stock_notification",Integer)
+              ,Column("existence_notification",Integer),)
 
 
-class Patient(Base):
-    __tablename__ = "product"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(255))
-    description = Column(String(255))
-    shelf = Column(String(255))
-    stock = Column(Integer)
-    stock_notification = Column(Integer)   
-    existence_notification = Column(Integer)
-    
-Base.metadata.create_all(bind=engine)
+meta.create_all(engine)

@@ -1,13 +1,8 @@
 from fastapi import APIRouter
-from sqlalchemy.orm import Session
-from config.database import SessionLocal
+from config.database import conn
+from schemas.product import ProductBase
+from models.product import product
+from sqlalchemy.exc import SQLAlchemyError
 
+product=APIRouter()
 
-router = APIRouter()
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
