@@ -1,7 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from main import app  # Asegúrate de importar tu aplicación FastAPI desde su ubicación
-
+from main import app  
 client = TestClient(app)
 
 def test_health_check():
