@@ -30,5 +30,5 @@ def test_scrape_aliexpress():
         # Verifica que el nombre del producto no esté vacío
         assert product["Product"].strip() != ""
 
-    # Prueba adicional: Verifica que se obtengan más de un producto (puedes ajustar esto según tus necesidades)
+    # Prueba adicional: Verifica que se obtengan más de un producto
     assert len(product_data) > 1
