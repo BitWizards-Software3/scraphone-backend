@@ -68,3 +68,6 @@ async def scrape_both_endpoints(search_data: Dict[str, str]):
     combined_data = sorted(combined_data, key=lambda x: x['Price'])
     
     return {"productos": combined_data}
+
+
+

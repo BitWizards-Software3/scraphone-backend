@@ -1,19 +1,18 @@
-from pydantic import BaseModel
-"""
-    Clase ProductBase - Define un modelo de datos para productos utilizando Pydantic.
+from sqlalchemy import Column, Integer, String
+from config.database import Base, engine
 
-    Atributos:
-    - name (str): El nombre del producto.
-    - description (str): La descripción del producto.
-    - shelf (str): La ubicación del producto en el estante o local.
-    - stock (int): La cantidad de stock disponible del producto.
-    - stock_notification (int): Umbral de notificación de stock bajo.
-    - existence_notification (int): Umbral de notificación de existencia baja.
-"""
-class ProductBase(BaseModel):
-    name: str
-    description: str
-    shelf: str
-    stock: int
-    stock_notification : int  
-    existence_notification :int
+# Creación de una tabla llamada "product"
+class Product(Base):
+    __tablename__ = "products"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(255))
+    description = Column(String(255))
+    shelf = Column(String(255))
+    stock = Column(Integer)
+    stock_notification = Column(Integer)
+    existence_notification = Column(Integer)
+
+
+# Creación de la tabla en la base de datos
+Base.metadata.create_all(bind=engine)
