@@ -5,6 +5,7 @@ from config.database import engine
 from schemas.product import ProductBase, ProductView 
 from sqlalchemy.orm import Session
 from config.database import SessionLocal
+from typing import List
 
 router = APIRouter()
 
@@ -36,8 +37,9 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
 
     return product_view
 
-# Endpoint para obtener la lista de todos los productos
-@router.get("/products", response_model=list[ProductView])
+
+@router.get("/products", response_model=List[ProductView])
+
 def get_all_products(db: Session = Depends(get_db)):
     products = db.query(Product).all()
     product_views = [ProductView(
