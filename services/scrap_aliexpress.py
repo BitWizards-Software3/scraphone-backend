@@ -38,11 +38,5 @@ def scrape_aliexpress(search_term):
             'Link': link,
             'Image': image
         })
-
-    # Convertir la lista de productos en un objeto JSON y devolverlo
-    return json.dumps(product_data, indent=4)
-
-print(scrape_aliexpress('iphone'))
-
     # Convertir la lista de productos en un objeto JSON y devolverlo
     return product_data
