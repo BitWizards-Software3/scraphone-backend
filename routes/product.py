@@ -70,7 +70,7 @@ def create_product(product: ProductBase, db: Session = Depends(get_db)):
 
 #Endpoint para modificar productos
 @router.put("/products/{product_id}", response_model=None)
-def update_user(product_id: int, product: ProductBase, db: Session = Depends(get_db)):
+def update_product(product_id: int, product: ProductBase, db: Session = Depends(get_db)):
     db.query(Product).filter(Product.id == product_id).update(product.dict(exclude_unset=True))
     db.commit()
     updated_product = db.query(Product).filter(Product.id == product_id).first()
@@ -91,3 +91,10 @@ def delete_product(product_id: int, db: Session = Depends(get_db)):
     db.commit()
     
     return None
+
+@router.put("/products/decrease_product/{product_id}", response_model=None)
+def decrease_product(product_id: int, db: Session = Depends(get_db)):
+    db.query(Product).filter(Product.id == product_id).update({"stock": Product.stock - 1})
+    db.commit()
+    updated_product = db.query(Product).filter(Product.id == product_id).first()
+    return updated_product
