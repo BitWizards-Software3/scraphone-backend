@@ -2,11 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
-def scrape_aliexpress(search_term):
-    url = requests.get(f'https://es.aliexpress.com/w/wholesale-{search_term}.html')
+def scrape_aliexpress(search_term):   
+    url = requests.get(f'https://es.aliexpress.com/w/wholesale-{search_term}.html?spm=a2g0o.productlist.search.0')
     soup = BeautifulSoup(url.content, 'html.parser')
-
-    productos = soup.find_all("a", class_="manhattan--container--1lP57Ag cards--gallery--2o6yJVt search-card-item")  
+    productos = soup.find_all("div", class_="multi--outWrapper--SeJ8lrF card--out-wrapper") 
+    print(productos)
     product_data = []
     for prod in productos:
         # Extraer el nombre del producto

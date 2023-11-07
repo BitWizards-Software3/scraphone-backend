@@ -16,6 +16,7 @@ def scrape_alibaba(search_term):
     url = requests.get(f'https://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText={search_term}')
     soup = BeautifulSoup(url.content, 'html.parser')
     productos = soup.find_all("div", class_="fy23-search-card fy23-gallery-card m-gallery-product-item-v2 J-search-card-wrapper")
+    print(productos)
     product_data = []
     for prod in productos:
         # Extraer el nombre del producto
