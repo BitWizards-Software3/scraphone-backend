@@ -16,6 +16,7 @@ def scrape_aliexpress(search_term):
         # Extraer el nombre del producto
         name = prod.find("h1", class_="multi--titleText--nXeOvyr").text.strip()
         # Extraer la imagen del producto
+        image=""
         img_tag = prod.find("img", class_="images--item--3XZa6xf")
         if img_tag is not None:
             image = img_tag['src']
@@ -25,8 +26,10 @@ def scrape_aliexpress(search_term):
             
         # Extraer el precio del producto
         price_text = prod.find("div", class_="multi--price--1okBCly").text.strip()
-        price_text = price_text.replace('COP', '').replace(',', '')  # Eliminar 'COP' y las comas
-        price = float(price_text)  # Convertir el precio a un número
+        price_text = price_text.replace('COP', '').replace(',', '')
+        # Eliminar 'COP' y las comas
+        price_parts = price_text.split('.')
+        price = float(price_parts[0]) if price_parts and price_parts[0].isdigit() else 0  # Convertir el precio a un número
         # Extraer el enlace del producto
         link= prod.find("a", class_="multi--container--1UZxxHY cards--card--3PJxwBm search-card-item").get('href')
         if link.startswith("//"):
