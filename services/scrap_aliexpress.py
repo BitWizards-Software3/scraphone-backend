@@ -16,8 +16,9 @@ def scrape_aliexpress(search_term):
         # Extraer el nombre del producto
         name = prod.find("h1", class_="multi--titleText--nXeOvyr").text.strip()
         # Extraer la imagen del producto
-        img_tag = prod.find("img", class_="multi--img--1IH3lZb product-img")
+        img_tag = prod.find("img", class_="images--item--3XZa6xf")
         if img_tag is not None:
+            image = img_tag['src']
             image = "https:" + img_tag['src']
         else:
            print("No se encontró la imagen del producto")
