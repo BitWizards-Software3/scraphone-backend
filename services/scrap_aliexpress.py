@@ -2,10 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
-import requests
-from bs4 import BeautifulSoup
-import json
-
 def scrape_aliexpress(search_term):   
     url = requests.get(f'https://es.aliexpress.com/w/wholesale-{search_term}.html?spm=a2g0o.productlist.search.0')
     soup = BeautifulSoup(url.content, 'html.parser')
@@ -16,20 +12,18 @@ def scrape_aliexpress(search_term):
         # Extraer el nombre del producto
         name = prod.find("h1", class_="multi--titleText--nXeOvyr").text.strip()
         # Extraer la imagen del producto
-        image=""
         img_tag = prod.find("img", class_="images--item--3XZa6xf")
         if img_tag is not None:
-            image = img_tag['src']
             image = "https:" + img_tag['src']
         else:
            print("No se encontró la imagen del producto")
             
         # Extraer el precio del producto
         price_text = prod.find("div", class_="multi--price--1okBCly").text.strip()
-        price_text = price_text.replace('COP', '').replace(',', '')
-        # Eliminar 'COP' y las comas
-        price_parts = price_text.split('.')
-        price = float(price_parts[0]) if price_parts and price_parts[0].isdigit() else 0  # Convertir el precio a un número
+        price_text = price_text.replace('COP', '').replace(',', '')  # Eliminar 'COP' y las comas
+        partes = price_text.split('.') # Eliminar los decimales
+        resultado = ".".join(partes[:2])
+        price = float(resultado)  # Convertir el precio a un número
         # Extraer el enlace del producto
         link= prod.find("a", class_="multi--container--1UZxxHY cards--card--3PJxwBm search-card-item").get('href')
         if link.startswith("//"):
